@@ -1,5 +1,3 @@
-import os
-import json
 from tinydb import TinyDB, Query
 
 class AdminPanel:

@@ -1,5 +1,4 @@
 import os
-import json
 from dotenv import load_dotenv
 import telebot
 from tinydb import where
@@ -39,7 +38,7 @@ class BotTele:
             else:
                 bot_self.bot.reply_to(
                     message,
-                    'Você não possui cadastro. Caso deseje acessar o bot envie mensagem para .'
+                    'Você não possui cadastro. Caso deseje acessar o bot envie mensagem para.'
                 )
 
         # /admin
