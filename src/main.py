@@ -33,13 +33,28 @@ class BotTele:
             if bot_self.admin_panel.chat_ids_table.contains(where('chat_id') == message.chat.id):
                 bot_self.bot.reply_to(
                     message,
-                    f'Welcome - {message.from_user.first_name}, send photos, videos or text to make broadcast'
+                        "<b>Hello</b>, you have been accepted to <b>Hermod</b>. Now it's up to you: "
+    "send <b>10 files within 30 minutes</b> to continue here.<br><br>"
+    "<b>Sending files is mandatory and cannot be skipped.</b> "
+    "Your activity is monitored by us, so if you want to stay here, "
+    "<b>keep sending files constantly</b>.<br><br>"
+    "Welcome and <i>have a good time!</i>"
                 )
             else:
                 bot_self.bot.reply_to(
                     message,
-                    'You dont have access yet, send message to .'
+                     f'Hello <b>{message.from_user.first_name}</b>, welcome to <b>HERMOD</b>, '
+        'your secure way to send data. If you want to access our bot, press '
+        '<b>/join</b> to send your entry request and become part of this universe. '
+        '<i>Keep calm and be patient</i>.'
                 )
+                
+        def group_link(message):
+            self.bot.reply_to(
+                message,
+                '[Press here to join](https://t.me/+Ki1GXFSSPzs1OGJh)',
+                parse_mode='Markdown'
+            )
 
         # /admin
         @self.bot.message_handler(commands=['admin'])
