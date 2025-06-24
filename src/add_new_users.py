@@ -10,6 +10,7 @@ class Controller:
         self.db = TinyDB('admin_panel_db.json')
         self.chat_ids_table = self.db.table('chat_ids')
         self.db_admin = self.db.table('admin')
+        self.message = self.db.table('user_message')   
         TARGET_GROUP_ID = os.environ['TARGET_GROUP_ID']
         self.chat_id = int(TARGET_GROUP_ID)
 
@@ -18,16 +19,19 @@ class Controller:
             payload = self._make_payload(user, action='added')
             user_id = payload['user']['id']
             # Insere se não existir
-            if not self.chat_ids_table.contains(where('chat_id') == user_id):
-                self.chat_ids_table.insert({'chat_id': user_id})   
+            if not payload['user']['is_bot']:
+                if not self.chat_ids_table.contains(where('chat_id') == user_id):
+                    self.chat_ids_table.insert({'chat_id': user_id})   
 
     def remove_user(self,user):
         payload = self._make_payload(user, action='removed')
         user_id = payload['user']['id']
+        
         # Remove se existir
         if self.db_admin.contains(where('chat_id') == user_id):
             self.db_admin.remove(where('chat_id') == user_id)
-        
+
+        # Remove da tabela de admins caso seja admin
         if self.chat_ids_table.contains(where('chat_id') == user_id):
             self.chat_ids_table.remove(where('chat_id') == user_id)
 

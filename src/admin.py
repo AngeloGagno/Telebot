@@ -7,7 +7,6 @@ class AdminPanel:
         self.db = TinyDB('admin_panel_db.json')
         self.chat_ids_table = self.db.table('chat_ids')
         self.db_admin = self.db.table('admin')
-
     def add_admin(self,message,username):
         
         if len(self.db_admin) == 0:
@@ -20,12 +19,12 @@ class AdminPanel:
             try:
                 chat_id = int(message.text.split()[1])
             except (IndexError, ValueError):
-                return self.bot.reply_to(message, 'Uso correto: /approve <chat_id>')
+                return self.bot.reply_to(message, 'Correct Use: /approve <chat_id>')
             
             self.verify_user_admin(chat_id)
 
             self.db_admin.insert({'chat_id':chat_id,'promoted_by':username})
-            self.bot.reply_to(message,'Admin Inserido com sucesso.')
+            self.bot.reply_to(message,'Admin inserted successfully.')
 
     def verify_user_admin(self,chat_id):
         User = Query()

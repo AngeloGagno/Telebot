@@ -17,7 +17,7 @@ class BotTele:
 
         # Instancia ContentTypes onde contem os tratadores de mensagem
         self.content = ContentTypes(self.bot)
-
+    
         # Instancia de ação do grupo 
         self.group = Controller()
         # Registrar os handlers de comandos, broadcast e eventos de membros
@@ -33,12 +33,12 @@ class BotTele:
             if bot_self.admin_panel.chat_ids_table.contains(where('chat_id') == message.chat.id):
                 bot_self.bot.reply_to(
                     message,
-                    f'Bem-vindo - {message.from_user.first_name}, envie fotos, textos ou vídeos para fazer broadcast'
+                    f'Welcome - {message.from_user.first_name}, send photos, videos or text to make broadcast'
                 )
             else:
                 bot_self.bot.reply_to(
                     message,
-                    'Você não possui cadastro. Caso deseje acessar o bot envie mensagem para.'
+                    'You dont have access yet, send message to .'
                 )
 
         # /admin
@@ -53,7 +53,7 @@ class BotTele:
                 bot_self.admin_panel.add_admin(message, message.from_user.first_name)
                 return
             if not bot_self.admin_panel.db_admin.contains(where('chat_id') == message.chat.id):
-                bot_self.bot.reply_to(message, 'Acesso negado. Somente admins podem adicionar novos admins.')
+                bot_self.bot.reply_to(message, 'Access Denied. Only admins can use this command.')
             else:
                 bot_self.admin_panel.add_admin(message, message.from_user.first_name)
 
@@ -69,7 +69,7 @@ class BotTele:
                         self.content.video_sender(chat, message)
                     if message.photo:
                         self.content.photo_sender(chat, message)
-
+                        
         # Quando alguém for adicionado ao grupo
         @self.bot.message_handler(content_types=['new_chat_members'])
         def on_user_added(message):
@@ -82,7 +82,6 @@ class BotTele:
             self.group.remove_user(user=user)
 
     def run(self):
-        print("Bot rodando...")
         self.bot.polling()
 
 if __name__ == '__main__':
