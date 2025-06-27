@@ -99,7 +99,7 @@ class BotTele:
 
     def run(self):
         print("🤖 Bot running...")
-        self.bot.polling()
+        self.bot.polling(none_stop=True, skip_pending=True)
 
 if __name__ == '__main__':
     bot = BotTele()
